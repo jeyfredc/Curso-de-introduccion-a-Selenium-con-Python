@@ -406,7 +406,13 @@ añadir a este mismo archivo despues del metodo test_hello_world, el metodo
         driver = self.driver
         driver.get('https://www.wikipedia.org')
 ```
+
+![assets/img16.png](assets/img16.png)
+
+
 ejecutar en la terminal y por ultimo dentro de la carpeta del curso se va a generar una carpeta llamada reports que contiene a reportes y esta carpeta tiene un archivo llamada hello-world-report.html.
+
+![assets/img17.png](assets/img17.png)
 
 ![assets/img14.png](assets/img14.png)
 

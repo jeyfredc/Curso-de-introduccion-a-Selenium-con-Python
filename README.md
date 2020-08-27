@@ -11,11 +11,11 @@ Curso de introduccion a Selenium con Python realizado en Platzi
 
 [Clase 4 Configurar entorno de trabajo](#Clase-4-Configurar-entorno-de-trabajo)
 
-[Clase 5 ¡Hola, Mundo!](#Clase-5-¡Hola,-Mundo!)
+[Clase 5 ¡Hola, Mundo!](#Clase-5-¡Hola-Mundo!)
 
 [Descarga del archivo y el Chrome Driver](#Descarga-del-archivo-y-el-Chrome-Driver)
 
-[]()
+[Clase 6 Encontrar elementos con find_element](#Clase-6-Encontrar-elementos-con-find_element)
 
 []()
 
@@ -419,3 +419,44 @@ ejecutar en la terminal y por ultimo dentro de la carpeta del curso se va a gene
 abrir con Chrome para visualizar el reporte donde aparece la duracion y el estatos si paso o fallo 
 
 ![assets/img15.png](assets/img15.png)
+
+para que las ventanas no se ejecuten por aparte se hace un cambio y se implementa el decorador classmethod al inicio y finalizacion del Test Fixture y ademas se cambian todas las palabras self por cls
+
+
+```
+import unittest
+from pyunitreport import HTMLTestRunner
+from selenium import webdriver
+
+class HelloWorld(unittest.TestCase):
+
+
+    @classmethod
+    def setUp(cls):
+        cls.driver = webdriver.Chrome(executable_path= './chromedriver')
+        driver = cls.driver
+        driver.implicitly_wait(10)
+
+    
+    def test_hello_world(self):
+        driver = self.driver
+        driver.get('https://www.platzi.com')
+
+
+    def test_visit_wikipedia(self):
+        driver = self.driver
+        driver.get('https://www.wikipedia.org')
+    
+
+    def tearDown(cls):
+        cls.driver.quit()
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity = 2, testRunner = HTMLTestRunner(output = 'reportes', report_name = 'hello-world-report'))
+
+```
+
+y nuevamente se pasa a ejecutar como en los pasos anteriores
+
+## Clase 6 Encontrar elementos con find_element

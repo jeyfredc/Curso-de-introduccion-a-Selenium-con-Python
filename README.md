@@ -460,3 +460,117 @@ if __name__ == "__main__":
 y nuevamente se pasa a ejecutar como en los pasos anteriores
 
 ## Clase 6 Encontrar elementos con find_element
+
+el siguiente paso es encontrar e identificar cada uno de los elementos que componen a un sitio web para que podamos interactuar con ellos
+
+![assets/img18.png](assets/img18.png)
+
+los selectores seran los que nos den la oportunidad de llegar a los elementos a traves del codigo y ejecutar las acciones que le indiquemos a Selenium
+
+la forma en la que podemos encontrarlos es a traves de:
+
+![assets/img19.png](assets/img19.png)
+
+pagina a analizar http://demo-store.seleniumacademy.com/
+
+La estructura de codigo basica para hacer automatizaciones es la siguiente
+
+```
+import unittest
+
+from selenium import webdriver
+
+class HomePageTest(unittest.TestCase):
+    
+
+    def setUp(self):
+        pass
+
+
+    def tearDown(self):
+        pass
+
+
+if __name__ == "__main__":
+    pass
+```
+
+Se crea el codigo a traves de un archivo llamado searchtests.py el cual se encuentra en la carpeta del repositorio
+
+Las siguientes lineas de codigo se relacionan con las busquedas de las imagenes que tambien se encuentran en el archivo
+
+**Busqueda de la barra de busqueda**
+
+![assets/img20.png](assets/img20.png)
+
+**Busqueda por el Id**
+
+```
+    def test_search_text_field(self):
+        search_field = self.driver.find_element_by_id("search")
+
+```
+**Busqueda por el nombre**
+
+```
+    def test_search_text_field_by_name(self):
+        search_field = self.driver.find_element_by_name("q")
+
+```
+
+**Busqueda por la clase**
+
+```
+   def test_search_text_field_by_class_name(self):
+        search_field = self.driver.find_element_by_class_name("input-text")
+
+```
+
+**Busqueda para verificar que el boton de la barra de busqueda este disponible**
+
+![assets/img21.png](assets/img21.png)
+
+**Busqueda por la clase**
+
+```
+    def test_search_button_ennabled(self): 
+        button = self.driver.find_element_by_class_name("button")
+```
+
+**Busqueda para listar imagenes de las promos de la pagina**
+
+![assets/img22.png](assets/img22.png)
+
+***por la clase y el selector**
+
+```
+    def test_count_of_promo_banner_images(self):#Metodo para contar cuantas imagenes hay de promocion en el banner
+        banner_list = self.driver.find_element_by_class_name("promos")
+        banners = banner_list.find_elements_by_tag_name('img')
+        self.assertEqual(3, len(banners))
+```
+
+**Busqueda de la imagen principal del banner**
+
+![assets/img23.png](assets/img23.png)
+
+**Busqueda por el Xpath**
+
+```
+def test_vip_promo(self):
+        vip_promo = self.driver.find_element_by_xpath('//*[@id="top"]/body/div/div[2]/div[2]/div/div/div[2]/div[1]/ul/li[4]/a/img')
+```
+**Busqueda del carro de compras a traves de css**
+
+![assets/img24.png](assets/img24.png)
+
+```
+def test_shopping_cart(self):
+        shopping_cart_icon = self.driver.find_element_by_css_selector("div.header-minicart span.icon")
+```
+
+Luego ejecutar el archivo en la terminal para verificar que se realicen los test
+
+![assets/img25.png](assets/img25.png)
+
+Tener en cuenta que el Xpath puede no ser la mejor opcion porque las rutas pueden cambiar

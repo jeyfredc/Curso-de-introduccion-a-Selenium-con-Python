@@ -7,7 +7,7 @@ Curso de introduccion a Selenium con Python realizado en Platzi
 
 [Clase 2 Historia de Selenium](#Clase-2-Historia-de-Selenium)
 
-[]()
+[Clase 3 Otras herramientas de testing y automatización](#Clase-3-Otras-herramientas-de-testing-y-automatización)
 
 []()
 
@@ -188,10 +188,48 @@ Entonces el equipo de desarrollo considero una buena idea utilizar el nombre de 
 
 **Selenium Grid**(Es un complemento)
 
-**Caracteristicos**
+**Caracteristicas**
 
 - Se utiliza junto a Selenium RC(Remote Control)
 
 - Permite correr pruebas en paralelo
 
 - Conveniente para ahorrar tiempo
+
+## Clase 3 Otras herramientas de testing y automatización
+
+Selium puede no ser la herramienta de testing y automatizacion mas eficiente por lo cual hay que considerar la existencia de otro tipo de herramientas
+
+**Puppeteer**
+
+![assets/img5.png](assets/img5.png)
+
+Tiene una comunidad pequeña por lo cual aun se esta desarrollando 
+
+**Cyperss.io**
+
+![assets/img6.png](assets/img6.png)
+
+Una de sus ventajas mas importantes es que tiene un excelente manejo del asincronimo lo cual hace que las esperas puedan ser dinamicas y se puedan manejar de forma sencilla
+
+**¿Cuál es la mejor opción?**
+
+Se debe tomar en cuenta lo siguiente
+
+- ¿Cuál es lenguaje de programación con el que mas esta familiarizado?
+
+- ¿Qué lenguaje de programación utiliza el equipo de trabajo?
+
+- El proyecto de trabajo requiere grandes llamadas de asincronismo o no
+
+- Si se quiere hacer una automatizacion para hacer una tarea mas sencilla
+
+**Porque usar Selenium durante el curso**
+
+- Facil de utilizar
+
+- Es compatible con muchos navegadores
+
+- Se pueden implementar diversos lenguajes de programación que para el caso sera Python
+
+- Se pueden lograr grandes procesos de automatización y testing

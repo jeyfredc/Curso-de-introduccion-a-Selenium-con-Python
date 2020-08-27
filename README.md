@@ -233,3 +233,30 @@ Se debe tomar en cuenta lo siguiente
 - Se pueden implementar diversos lenguajes de programación que para el caso sera Python
 
 - Se pueden lograr grandes procesos de automatización y testing
+
+## Clase 4 Configurar entorno de trabajo
+
+![assets/img7.png](assets/img7.png)
+
+Pasos a ejecutar en la terminal estos sirven para entornos en Linux mint, basados en ubuntu o debian.
+
+Tener en cuenta verificar si se pueden seguir los mismos pasos en windows
+
+- paso 1
+
+python3 --version (se debe tener una version igual o superior a Python 3.6)
+
+- paso 2 
+
+pip3 install selenium
+
+- en caso de que no este instalado pip
+
+    -sudo apt-get install python3-pip
+    - nuevamente ejecutar (pip3 install selenium)
+
+- paso 3
+
+pip3 install pyunitreport
+
+**pyunitreport es una libreria que sirve para generar reportes en html**

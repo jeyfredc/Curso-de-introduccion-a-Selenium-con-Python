@@ -577,3 +577,34 @@ Tener en cuenta que el Xpath puede no ser la mejor opcion porque las rutas puede
 
 ## Clase 7 Preparar assertions y test suites
 
+Assertions son los métodos qie permiten validar un valor esperado en la ejecución del test.Si el resultado es verdadero el test continúa, en caso contrario "falla" y termina.
+
+![assets/img26.png](assets/img26.png)
+
+Son una coleccion de pruebas unificadas en un archivo como por ejemplo tener pruebas del login, del home y otras secciones. Pero en lugar de estar corriendo un archivo de forma independiente, esperar que termine, podemos unificar en un test suite el cual al correr las pruebas no se van a ejecutar en paralelo, si no, de forma secuencial
+
+Para eso crear un nuevo archivo llamado assertions.py el cual contiene la estructura basica para ejecutar Selenium
+
+```
+import unittest
+from selenium import webdriver
+
+class AssertionsTest(unittest.TestCase):
+
+
+    @classmethod
+    def setUp(self):
+        self.driver = webdriver.Chrome(executable_path= './chromedriver')
+        driver = self.driver
+        driver.implicitly_wait(10)
+        driver.maximize_window()
+        driver.get('http://demo-store.seleniumacademy.com')
+    
+
+    def tearDown(self):
+        self.driver.quit()
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity = 2)
+```

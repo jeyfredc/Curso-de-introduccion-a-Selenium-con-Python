@@ -495,7 +495,57 @@ if __name__ == "__main__":
     pass
 ```
 
-Se crea el codigo a traves de un archivo llamado searchtests.py el cual se encuentra en la carpeta del repositorio
+Se crea el codigo a traves de un archivo llamado searchtests.py a continuacion dejo el codigo de esta clase porque en la siguiente cambia la clase y los metodos
+
+**searchtests.py**
+
+```
+import unittest
+
+from selenium import webdriver
+
+class HomePageTest(unittest.TestCase):
+
+
+    def test_search_text_field(self):
+        search_field = self.driver.find_element_by_id("search")
+
+    
+    def test_search_text_field_by_name(self):
+        search_field = self.driver.find_element_by_name("q")
+
+
+    def test_search_text_field_by_class_name(self):
+        search_field = self.driver.find_element_by_class_name("input-text")
+
+
+    def test_search_button_ennabled(self): 
+        button = self.driver.find_element_by_class_name("button")
+
+
+    def test_count_of_promo_banner_images(self):#Metodo para contar cuantas imagenes hay de promocion en el banner
+        banner_list = self.driver.find_element_by_class_name("promos")
+        banners = banner_list.find_elements_by_tag_name('img')
+        self.assertEqual(3, len(banners))
+
+
+    def test_vip_promo(self):
+        vip_promo = self.driver.find_element_by_xpath('//*[@id="top"]/body/div/div[2]/div[2]/div/div/div[2]/div[1]/ul/li[4]/a/img')
+
+
+    def test_shopping_cart(self):
+        shopping_cart_icon = self.driver.find_element_by_css_selector("div.header-minicart span.icon")
+
+
+    def tearDown(self):
+        self.driver.quit()
+
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity= 2)
+```
+
 
 Las siguientes lineas de codigo se relacionan con las busquedas de las imagenes que tambien se encuentran en el archivo
 
@@ -577,34 +627,122 @@ Tener en cuenta que el Xpath puede no ser la mejor opcion porque las rutas puede
 
 ## Clase 7 Preparar assertions y test suites
 
-Assertions son los métodos qie permiten validar un valor esperado en la ejecución del test.Si el resultado es verdadero el test continúa, en caso contrario "falla" y termina.
+Assertions son los métodos que permiten validar un valor esperado en la ejecución del test. Si el resultado es verdadero el test continúa, en caso contrario "falla" y termina.
 
 ![assets/img26.png](assets/img26.png)
 
-Son una coleccion de pruebas unificadas en un archivo como por ejemplo tener pruebas del login, del home y otras secciones. Pero en lugar de estar corriendo un archivo de forma independiente, esperar que termine, podemos unificar en un test suite el cual al correr las pruebas no se van a ejecutar en paralelo, si no, de forma secuencial
+Son una coleccion de pruebas unificadas en un archivo como por ejemplo tener pruebas del login, del home y otras secciones. Pero en lugar de estar corriendo un archivo de forma independiente y esperar que termine, se puede unificar en un test suite el cual al correr las pruebas no se van a ejecutar en paralelo, si no, de forma secuencial
 
-Para eso crear un nuevo archivo llamado assertions.py el cual contiene la estructura basica para ejecutar Selenium
+Para esta clase se crean varios archivos que son **assertions.py**, **searchtests.py**(el cual es de la clase anterior pero cambian algunas cosas del codigo) y **smoketests.py**, a continuacion dejo los codigos de cada uno en el orden que fueron mencionados
+
+**assertions.py**
 
 ```
 import unittest
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
 
 class AssertionsTest(unittest.TestCase):
+    
 
-
-    @classmethod
     def setUp(self):
         self.driver = webdriver.Chrome(executable_path= './chromedriver')
         driver = self.driver
-        driver.implicitly_wait(10)
+        driver.implicitly_wait(30)
         driver.maximize_window()
-        driver.get('http://demo-store.seleniumacademy.com')
+        driver.get("http://demo-store.seleniumacademy.com/")
+        
+    def test_search_field(self):
+        self.assertTrue(self.is_element_present(By.NAME, 'q'))
+        
+    def test_language_option(self):
+        self.assertTrue(self.is_element_present(By.ID, 'select-language'))
+          
+    def tearDown(self):
+        self.driver.quit()
+        
+    def is_element_present(self, how, what):
+        try:
+            self.driver.find_element(by = how, value = what)
+        except NoSuchElementException as variable:
+            return False
+        return True
+```
+
+**Para la clase 7 el codigo cambia en los archivos por lo cual los dejare entre comentarios por si hay alguna duda y se pueda ejecutar el codigo**
+
+**searchtests.py**
+
+```
+import unittest
+
+from selenium import webdriver
+
+class SearchTests(unittest.TestCase):
     
+
+    def setUp(self):
+        self.driver = webdriver.Chrome(executable_path= './chromedriver')
+        driver = self.driver
+        driver.get("http://demo-store.seleniumacademy.com/")
+        driver.maximize_window()
+        driver.implicitly_wait(15)
+
+
+    def test_search_tee(self):
+        driver = self.driver
+        search_field = driver.find_element_by_name('q')
+        search_field.clear()
+
+        search_field.send_keys('tee')
+        search_field.submit()
+
+
+    def test_search_salt_shaker(self):
+        driver = self.driver
+        search_field = driver.find_element_by_name('q')
+
+        search_field.send_keys('salt shaker')
+        search_field.submit()
+
+        products = driver.find_elements_by_xpath('//*[@id="top"]/body/div/div[2]/div[2]/div/div[2]/div[2]/div[3]/ul/li/div/h2/a')
+        self.assertEqual(1, len(products))
+
 
     def tearDown(self):
         self.driver.quit()
 
 
+
 if __name__ == "__main__":
-    unittest.main(verbosity = 2)
+    unittest.main(verbosity= 2)
 ```
+
+
+**smoketests.py**
+
+
+```
+from unittest import TestLoader, TestSuite
+from pyunitreport import HTMLTestRunner
+from assertions import AssertionsTest
+from searchtests import SearchTests
+
+
+assertions_test = TestLoader().loadTestsFromTestCase(AssertionsTest)
+search_tests = TestLoader().loadTestsFromTestCase(SearchTests)
+
+#Construccion de suite de pruebas
+smoke_test = TestSuite([assertions_test, search_tests])
+
+#Respecto a los reportes
+
+kwargs = {
+    "output": 'smoke-report'
+    }
+
+runner = HTMLTestRunner(**kwargs)
+runner.run(smoke_test)
+```
+Despues de grabar estos archivos se ejecuta el archivo smoketests.py para ver que estan corriendo OK. apoyarse igualmente de los videos de Platzi para comprender mejor

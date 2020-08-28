@@ -19,7 +19,7 @@ Curso de introduccion a Selenium con Python realizado en Platzi
 
 [Clase 7 Preparar assertions y test suites](#Clase-7-Preparar-assertions-y-test-suites)
 
-[]()
+[Clase 8 Entender las clases WebDriver y WebElement](#Clase-8-Entender-las-clases-WebDriver-y-WebElement)
 
 []()
 
@@ -745,4 +745,34 @@ kwargs = {
 runner = HTMLTestRunner(**kwargs)
 runner.run(smoke_test)
 ```
-Despues de grabar estos archivos se ejecuta el archivo smoketests.py para ver que estan corriendo OK. apoyarse igualmente de los videos de Platzi para comprender mejor
+Despues de grabar estos archivos se ejecuta el archivo smoketests.py para ver que estan corriendo OK. apoyarse igualmente de los videos de Platzi para comprender mejor el codigo 
+
+## Clase 8 Entender las clases WebDriver y WebElement
+
+Como viste en clases anteriores, un sitio web se construye por código **HTML** en forma de árbol, conteniendo distintos elementos con los que podemos interactuar según estén presentes o no en nuestra interfaz gráfica.
+
+**Selenium WebDriver** nos brinda la posibilidad de poder referirnos a estos elementos y ejecutar métodos específicos para realizar las mismas acciones que un humano haría sobre los mismos, gracias a las clases **WebDriver** y **WebElement**.
+
+**Clase WebDriver**
+
+Cuenta con una serie de propiedades y métodos para interactuar directamente con la ventana del navegador y sus elementos relacionados, como son pop-ups o alerts. Por ahora nos centraremos a las más utilizadas.
+
+**Propiedades de la clase WebDriver**
+
+Estas son las más comunes para acceder al navegador.
+
+![assets/img27.png](assets/img27.png)
+
+**Clase WebElement**
+
+Esta clase nos permite interactuar específicamente con elementos de los sitios web como textbox, text area, button, radio button, checkbox, etc.
+
+**Propiedades más comunes de la clase WebElement**
+
+![assets/img28.png](assets/img28.png)
+
+**Métodos más comunes de la clase WebElement**
+
+![assets/img29.png](assets/img29.png)
+
+![assets/img30.png](assets/img30.png)

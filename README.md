@@ -17,7 +17,7 @@ Curso de introduccion a Selenium con Python realizado en Platzi
 
 [Clase 6 Encontrar elementos con find_element](#Clase-6-Encontrar-elementos-con-find_element)
 
-[]()
+[Clase 7 Preparar assertions y test suites](#Clase-7-Preparar-assertions-y-test-suites)
 
 []()
 
@@ -574,3 +574,6 @@ Luego ejecutar el archivo en la terminal para verificar que se realicen los test
 ![assets/img25.png](assets/img25.png)
 
 Tener en cuenta que el Xpath puede no ser la mejor opcion porque las rutas pueden cambiar
+
+## Clase 7 Preparar assertions y test suites
+

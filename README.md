@@ -21,11 +21,11 @@ Curso de introduccion a Selenium con Python realizado en Platzi
 
 [Clase 8 Entender las clases WebDriver y WebElement](#Clase-8-Entender-las-clases-WebDriver-y-WebElement)
 
-[]()
+[Clase 9 Manejar form, textbox, checkbox y radio button](#Clase-9-Manejar-form-textbox-checkbox-y-radio-button)
 
-[]()
+[Clase 10 Manejar dropdown y listas](#Clase-10-Manejar-dropdown-ylistas)
 
-[]()
+[Clase 11 Manejar alert y pop-up ](#Clase-11-Manejar-alert-y-pop-up)
 
 []()
 
@@ -781,7 +781,7 @@ Esta clase nos permite interactuar específicamente con elementos de los sitios 
 
 Para esta clase lo que se va a realizar es validar que tanto los campos como las validaciones de ingresos de formulario para crear una cuenta esten de manera correcta. verificar video y a continuacion el archivo el cual se llama **register_new_usser.py**, posteriormente ejecutarlo en la consola para comprobar que es lo que se esta realizando en cada paso
 
-``
+```
 import unittest
 from selenium import webdriver
 
@@ -842,4 +842,122 @@ class RegisterNewUser(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity= 2)
-``
+    
+```
+
+## Clase 10 Manejar dropdown y listas
+
+Los dropdown son menus desplegables donde se pueden encontrar diversas opciones y se puede acceder a ellas para elergirlas de forma automatizada, ya sea por el texto visible, orden en su indice o valor que se tiene asignado en su codigo html
+
+En esta clase se usa la estructura basica en el codigo que se ha venido manejando pero el nombre del archivo y clase cambia, en esta clase se importa el modulo Select y se va a trabajar sobre el menu despleagable de los idiomas a continuacion:
+
+
+**select_language.py**
+
+![assets/img31.png](assets/img31.png)
+
+```
+import unittest
+
+from selenium import webdriver
+
+from selenium.webdriver.support.ui import Select
+
+class LanguageOptions(unittest.TestCase):
+
+    def setUp(self):
+        self.driver = webdriver.Chrome(executable_path= './chromedriver')
+        driver = self.driver
+        driver.implicitly_wait(30)
+        driver.maximize_window()
+        driver.get('http://demo-store.seleniumacademy.com/')
+
+
+    def test_select_language(self):
+        exp_options = ['English', 'French', 'German']
+        act_options = []
+
+        select_language = Select(self.driver.find_element_by_id('select-language'))
+
+        self.assertEqual(3, len(select_language.options))
+
+        for option in select_language.options:
+            act_options.append(option.text)
+
+        self.assertListEqual(exp_options, act_options)
+
+        self.assertEqual('English', select_language.first_selected_option.text)
+
+        select_language.select_by_visible_text('German')
+
+        self.assertTrue('store=german' in self.driver.current_url)
+
+        select_language = Select(self.driver.find_element_by_id('select-language'))
+        select_language.select_by_index(0)
+
+    def tearDown(self):
+        self.driver.implicitly_wait(3)
+        self.driver.close()
+
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity= 2)
+```
+
+## Clase 11 Manejar alert y pop-up 
+
+Los elementos alert y pop-up, aparecen repentinamente y estos en ocasiones piden la confirmacion o negacion de algo, incluso que se escriba en el teclado informacion para que sea enviada, pero estos tambien se pueden automatizar con Selenium
+
+En esta clase se va a tratar uno de estos elementos, en la seccion de busqueda colocar la palabra tee,
+
+luego dar click en add to compare y finalmente en Clear All para que aparezca una ventana emergente como se muestra continuacion:
+
+![assets/img32.png](assets/img32.png)
+
+y a continuacion el codigo del archivo trabajado para la clase, contiene la misma estrcutura basica de clases anteriores 
+
+**alerts.py**
+
+```
+import unittest
+
+from selenium import webdriver
+
+
+class CompareProducts(unittest.TestCase):
+
+    def setUp(self):
+        self.driver = webdriver.Chrome(executable_path = './chromedriver')
+        driver = self.driver
+        driver.implicitly_wait(30)
+        driver.maximize_window()
+        driver.get('http://demo-store.seleniumacademy.com/')
+
+    def test_compare_products_removal_alert(self):
+        driver = self.driver
+        search_field = driver.find_element_by_name('q')
+        search_field.clear()
+
+        search_field.send_keys('tee')
+        search_field.submit()
+
+        driver.find_element_by_class_name('link-compare').click()
+        driver.find_element_by_link_text('Clear All').click()
+
+        alert = driver.switch_to_alert()
+        alert_text = alert.text
+
+        self.assertEqual('Are you sure you would like to remove all products from your comparison?', alert_text)
+
+        alert.accept()
+
+
+    def tearDown(self):
+        self.driver.close()
+
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity = 2)
+```

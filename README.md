@@ -27,9 +27,9 @@ Curso de introduccion a Selenium con Python realizado en Platzi
 
 [Clase 11 Manejar alert y pop-up ](#Clase-11-Manejar-alert-y-pop-up)
 
-[]()
+[Clase 12 Automatizar navegación](#Clase-12-Automatizar-navegación)
 
-[]()
+[Clase 13 Demora implícita y explícita](#Clase-13-Demora-implícita-y-explícita)
 
 []()
 
@@ -961,3 +961,63 @@ class CompareProducts(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main(verbosity = 2)
 ```
+
+## Clase 12 Automatizar navegación
+
+Otras acciones que se deben automatizar son las acciones del sitio web como avanzar, retroceder en el historial de navegacion, recargar pagina y otras opciones, la que se va a realizar en el codigo son las mas basicas y conocidas.
+
+En esta clase se utiliza el modulo time para hacer demorar un poco la busqueda de platzi en el buscador de google y se pasan por parametro 3 metodos
+
+**back() ->** el cual sirve para retroceder
+**forward() ->** el cual sirve para avanzar
+**refresh() ->** el cual sirve para refrescar la pagina
+
+**automatic_navigation.py**
+
+```
+import unittest
+from selenium import webdriver
+from time import sleep
+
+class NavigationTest(unittest.TestCase):
+
+    def setUp(self):
+
+        self.driver = webdriver.Chrome(executable_path = './chromedriver')
+        driver = self.driver
+        driver.implicitly_wait(30)
+        driver.maximize_window()
+        driver.get('https://google.com/')
+
+    
+    def test_browser_navigation(self):
+        driver = self.driver
+        search_field = driver.find_element_by_name('q')
+        search_field.clear()
+        search_field.send_keys('platzi')
+        search_field.submit()
+
+        driver.back()
+        sleep(3)
+        driver.forward()
+        sleep(3)
+        driver.refresh()
+        sleep(3)
+
+    def tearDown(self):
+        self.driver.close()
+
+
+if __name__ == "__main__":
+
+    unittest.main(verbosity = 2)
+
+```
+
+## Clase 13 Demora implícita y explícita
+
+Las pausas ayudan a manejar el asincronismo, la cual es una de las debilidades de Selenium y se puede encontrar como:
+
+- **Demora implicita :** Busca uno o varios elementos en el DOM si no se encuentran disponible por la cantidad de tiempo asignado
+
+- **Demora explicita :** Utiliza condiciones de espera determinadas y continua hasta que se cumplan

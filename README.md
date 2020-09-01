@@ -33,7 +33,7 @@ Curso de introduccion a Selenium con Python realizado en Platzi
 
 [Clase 14 Condicionales esperadas](#Clase-14-Condicionales-esperadas)
 
-[]()
+[Clase 15 Agregar y eliminar elementos](#Clase-15-Agregar-y-eliminar-elementos)
 
 []()
 
@@ -1109,3 +1109,65 @@ Configuracion de los metodos de prueba:
 ![assets/img36.png](assets/img36.png)
 
 ![assets/img37.png](assets/img37.png)
+
+## Clase 15 Agregar y eliminar elementos
+
+Esta clase es un reto del curso de platzi donde se intenta controlar el ejercicio en la siguiente pagina https://the-internet.herokuapp.com/ el ejercicio se llama **Add/Remove Elements** , es el segundo que se encuentra en ella, se pueden agregar y remover elementos.
+
+El ejercicio consiste en agregar elementos, los cuales se piden por consola, luego preguntar por consola cuantos se quiere remover, en el caso de que el usuario escriba que remueva mas elementos de los que agrego, si no se controla a traves de un try, except el programa va a arrojar un error y terminar su ejecucion. El reto esta en intentar controlar de otra forma. A continuacion el codigo de la clase
+
+
+```
+import unittest
+from selenium import webdriver
+from time import sleep
+
+class AddRemoveElements(unittest.TestCase):
+
+    def setUp(self):
+
+        self.driver = webdriver.Chrome(executable_path = './chromedriver')
+        driver = self.driver
+        driver.get('https://the-internet.herokuapp.com/')
+        driver.find_element_by_link_text('Add/Remove Elements').click()
+
+    
+    def test_add_remove(self):
+        driver = self.driver
+
+        elements_added = int(input('How many elements will you add?: '))
+        elements_removed = int(input('How many elements will you remove?: '))
+        total_elements = elements_added - elements_removed
+
+        add_button = driver.find_element_by_xpath('//*[@id="content"]/div/button')
+
+        sleep(3)
+
+        for i in range(elements_added):
+            add_button.click()
+
+        for i in range(elements_removed):
+            try:
+                delete_button = driver.find_element_by_xpath('//*[@id="elements"]/button[1]')
+                delete_button.click()
+
+            except:
+                print("You're tryin to delete more elements the the existent")
+                break
+
+
+        if total_elements > 0:
+            print(f'There are {total_elements} elements on screen')
+        else:
+            print('There 0 are elements of screen')
+
+        sleep(3)
+
+
+    def tearDown(self):
+        self.driver.close()
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity = 2)
+```

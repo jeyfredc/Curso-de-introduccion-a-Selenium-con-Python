@@ -1289,6 +1289,10 @@ if __name__ == "__main__":
 
 Esta clase es un reto del curso de platzi donde se intenta controlar el ejercicio en la siguiente pagina https://the-internet.herokuapp.com/ el ejercicio se llama **Typos**, en este ejercicio lo que hay que hacer es verificar que este parrafo de texto este bien escrito "Sometimes you'll see a typo, other times you won't." ya que al recargar la pagina puede aparecer correctamente como no, especificamente el error esta en la palabra **won't** la cual en ocasiones aparece como **won,t**
 
+![assets/img42.png](assets/img42.png)
+
+![assets/img43.png](assets/img43.png)
+
 ```
 import unittest
 from selenium import webdriver

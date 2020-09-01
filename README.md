@@ -31,7 +31,7 @@ Curso de introduccion a Selenium con Python realizado en Platzi
 
 [Clase 13 Demora implícita y explícita](#Clase-13-Demora-implícita-y-explícita)
 
-[]()
+[Clase 14 Condicionales esperadas](#Clase-14-Condicionales-esperadas)
 
 []()
 
@@ -1022,7 +1022,7 @@ Las pausas ayudan a manejar el asincronismo, la cual es una de las debilidades d
 
 - **Demora explicita :** Estas esperan a que se cumpla una condicion determinada de acuerdo a un set de condiciones que ya existen
 
-A continuacion el codigo del ejercicio el cual consiste en validar los idiomas de la pagina y en poder acceder a traver de cuenta y hacer la seleccion de mi cuenta para poder hacer registr, despues del codigo la explicación del mismo
+A continuacion el codigo del ejercicio el cual consiste en validar los idiomas de la pagina y en poder acceder a traver de cuenta y hacer la seleccion de mi cuenta para poder hacer registro, despues del codigo la explicación del mismo
 
 **waits.py**
 
@@ -1085,7 +1085,7 @@ Configuracion de los metodos de prueba:
         account = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'ACCOUNT'))) #Aqui se hace referencia para ir al enlace de cuentas de la pagina, igualmente se crea na variable, se indica que espere maximo 10 segundos, EC es la espera explicita y luego se indica a traves de LINK_TEXT la busqueda del elemento en el link el cual especificamente se llama ACCOUNT
         account.click()
 ```
-
+![assets/img33.png](assets/img33.png)
 ```
     def test_create_new_costumer(self): # se crea la funcion test para validar la cuenta
         self.driver.find_element_by_link_text('ACCOUNT').click() # al hacer click en ACCOUNT se despliega la opcion My Account el cual es la siguiente intruccion de codigo
@@ -1099,3 +1099,7 @@ Configuracion de los metodos de prueba:
         WebDriverWait(self.driver, 10).until(EC.title_contains('Create New Customer Account'))
 
 ```
+
+![assets/img34.png](assets/img34.png)
+
+## Clase 14 Condicionales esperadas

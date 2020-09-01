@@ -1103,3 +1103,9 @@ Configuracion de los metodos de prueba:
 ![assets/img34.png](assets/img34.png)
 
 ## Clase 14 Condicionales esperadas
+
+![assets/img35.png](assets/img35.png)
+
+![assets/img36.png](assets/img36.png)
+
+![assets/img37.png](assets/img37.png)

@@ -37,7 +37,7 @@ Curso de introduccion a Selenium con Python realizado en Platzi
 
 [Clase 16 Elementos dinámicos](#Clase-16-Elementos-dinámicos)
 
-[]()
+[Clase 17 Controles dinámicos](#Clase-17-Controles-dinámicos)
 
 []()
 
@@ -1116,7 +1116,7 @@ Esta clase es un reto del curso de platzi donde se intenta controlar el ejercici
 
 El ejercicio consiste en agregar elementos, los cuales se piden por consola, luego preguntar por consola cuantos se quiere remover, en el caso de que el usuario escriba que remueva mas elementos de los que agrego, si no se controla a traves de un try, except el programa va a arrojar un error y terminar su ejecucion. El reto esta en intentar controlar de otra forma. A continuacion el codigo de la clase 
 
-
+**add_remove_elements.py**
 ```
 import unittest
 from selenium import webdriver
@@ -1180,7 +1180,7 @@ Esta clase es un reto del curso de platzi donde se intenta controlar el ejercici
 
 ![assets/img39.png](assets/img39.png)
 
-
+**dynamic_elements.py**
 ```
 import unittest
 from selenium import webdriver
@@ -1224,3 +1224,64 @@ class DynamicElements(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main(verbosity = 2)
 ```
+
+## Clase 17 Controles dinámicos
+
+Esta clase es un reto del curso de platzi donde se intenta controlar el ejercicio en la siguiente pagina https://the-internet.herokuapp.com/ el ejercicio se llama **Dynamic Controls**, en este ejercicio lo que hay que hacer es controlar la ejecucion de checkbox y un formulario que se encuentra deshabilitado, para hacer click en ellos habilitarlos y en el campo del formulario de texto ingresar una palabra
+
+![assets/img40.png](assets/img40.png)
+
+![assets/img41.png](assets/img41.png)
+
+**dynamic_controls.py**
+
+```
+import unittest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+class DynamicControl(unittest.TestCase):
+
+    def setUp(self):
+        self.driver = webdriver.Chrome(executable_path= './chromedriver')
+        driver = self.driver
+        driver.get('https://the-internet.herokuapp.com/')
+        driver.find_element_by_link_text('Dynamic Controls').click()
+
+    def test_check_box(self):
+        driver = self.driver
+
+        checkbox= driver.find_element_by_css_selector('#checkbox')
+        checkbox.click()
+
+        remove_add_button = driver.find_element_by_css_selector('#checkbox-example > button')
+        remove_add_button.click()
+
+        WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#checkbox-example > button")))
+        remove_add_button.click()
+
+        enable_disable_button = driver.find_element_by_css_selector('#input-example > button')
+        enable_disable_button.click()
+
+        WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#input-example > button')))
+        
+        text_area = driver.find_element_by_css_selector('#input-example > input[type=text]')
+        text_area.send_keys('Jeyfred')
+
+        enable_disable_button.click()
+        
+
+    def test_button_enabled(self):
+        pass
+
+
+    def tearDown(self):
+        self.driver.close()
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity = 2)
+```
+

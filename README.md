@@ -1018,6 +1018,84 @@ if __name__ == "__main__":
 
 Las pausas ayudan a manejar el asincronismo, la cual es una de las debilidades de Selenium y se puede encontrar como:
 
-- **Demora implicita :** Busca uno o varios elementos en el DOM si no se encuentran disponible por la cantidad de tiempo asignado
+- **Demora implicita :** Va a buscar un elemento en el DOM, en el caso de que lo encuentre va a continuar, para ello va a esperar una cantidad de tiempo determinado estas pausas, en el pasado se han usado con **implicitly_wait**
 
-- **Demora explicita :** Utiliza condiciones de espera determinadas y continua hasta que se cumplan
+- **Demora explicita :** Estas esperan a que se cumpla una condicion determinada de acuerdo a un set de condiciones que ya existen
+
+A continuacion el codigo del ejercicio el cual consiste en validar los idiomas de la pagina y en poder acceder a traver de cuenta y hacer la seleccion de mi cuenta para poder hacer registr, despues del codigo la explicación del mismo
+
+**waits.py**
+
+```
+import unittest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+class ExplicitiWaitTest(unittest.TestCase):
+
+    def setUp(self):
+
+        self.driver = webdriver.Chrome(executable_path = './chromedriver')
+        self.driver.get('http://demo-store.seleniumacademy.com')
+
+
+    def test_account_link(self):
+        WebDriverWait(self.driver, 10).until(lambda s: s.find_element_by_id('select-language').get_attribute('length') == '3')
+
+        account = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'ACCOUNT')))
+        account.click()
+
+    
+    def test_create_new_costumer(self):
+        self.driver.find_element_by_link_text('ACCOUNT').click()
+
+        my_account = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'My Account')))  
+        my_account.click()
+
+        create_account_button = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, 'CREATE AN ACCOUNT')))
+        create_account_button.click()
+
+        WebDriverWait(self.driver, 10).until(EC.title_contains('Create New Customer Account'))
+
+
+    def tearDown(self):
+        self.driver.close()
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity = 2)
+```
+
+Lo primero que se hace es importar:
+
+```
+from selenium.webdriver.common.by import By #Nos ayuda a hacer referencia a un elemento del sitio web a traves de sus selectores, no para identificarlo si no para interactuar distinto a como lo hace webdriver
+from selenium.webdriver.support.ui import WebDriverWait # Permite hacer uso de las expected conditions junto con las esperas explicitas
+from selenium.webdriver.support import expected_conditions as EC # Permite hacer uso de las esperas explicitas, al final se nombran como EC para no estarlas llamando por su nombre completo
+```
+
+Configuracion de los metodos de prueba:
+
+```
+    def test_account_link(self):
+        WebDriverWait(self.driver, 10).until(lambda s: s.find_element_by_id('select-language').get_attribute('length') == '3') # WebDriverWait hace referencia a self.driver y esperara 10 segundos, lambda(hace referencia a cumplir la condicion esperada), luego lo que se hace es buscar su elemento por id y obtener el atributo por su longitud la cual se sabe que es 3 porque son 3 idiomas
+
+        account = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'ACCOUNT'))) #Aqui se hace referencia para ir al enlace de cuentas de la pagina, igualmente se crea na variable, se indica que espere maximo 10 segundos, EC es la espera explicita y luego se indica a traves de LINK_TEXT la busqueda del elemento en el link el cual especificamente se llama ACCOUNT
+        account.click()
+```
+
+```
+    def test_create_new_costumer(self): # se crea la funcion test para validar la cuenta
+        self.driver.find_element_by_link_text('ACCOUNT').click() # al hacer click en ACCOUNT se despliega la opcion My Account el cual es la siguiente intruccion de codigo
+
+        my_account = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'My Account')))  
+        my_account.click() # Despues de hacer click sobre este se abre otra pagina que en su head se encuentra el titulo de la pagina el cual es (Create New Customer Account)  donde se puede hacer la creacion de cuenta en CREATE AN ACCOUNT el cual es la siguiente linea de codigo
+
+        create_account_button = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, 'CREATE AN ACCOUNT')))
+        create_account_button.click()
+
+        WebDriverWait(self.driver, 10).until(EC.title_contains('Create New Customer Account'))
+
+```

@@ -1227,7 +1227,7 @@ if __name__ == "__main__":
 
 ## Clase 17 Controles dinámicos
 
-Esta clase es un reto del curso de platzi donde se intenta controlar el ejercicio en la siguiente pagina https://the-internet.herokuapp.com/ el ejercicio se llama **Dynamic Controls**, en este ejercicio lo que hay que hacer es controlar la ejecucion de checkbox y un formulario que se encuentra deshabilitado, para hacer click en ellos habilitarlos y en el campo del formulario de texto ingresar una palabra
+Esta clase es un reto del curso de platzi donde se intenta controlar el ejercicio en la siguiente pagina https://the-internet.herokuapp.com/ el ejercicio se llama **Dynamic Controls**, en este ejercicio lo que hay que hacer es controlar la ejecucion de checkbox y un formulario que se encuentra deshabilitado, para hacer click en ellos habilitarlos y en el campo del formulario de texto ingresar una palabra, se debe implementar demora explicita para poder realizar el control ya que al habilitar los botones nuevamente la pagina queda en ejecucion
 
 ![assets/img40.png](assets/img40.png)
 

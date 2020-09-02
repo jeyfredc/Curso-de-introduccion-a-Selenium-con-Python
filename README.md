@@ -49,6 +49,8 @@ Curso de introduccion a Selenium con Python realizado en Platzi
 
 [Clase 22 Realizar una prueba técnica](#Clase-22-Realizar-una-prueba-técnica)
 
+[Clase 23 Conclusiones](#Clase-23-Conclusiones)
+
 ## Clase 1 Bienvenida al curso
 
 Recomendaciones de cursos antes de iniciar con el de Selenium

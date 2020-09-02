@@ -1599,3 +1599,8 @@ class TestingMercadoLibre(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main(verbosity = 2)
 ```
+## Clase 23 Conclusiones
+
+![assets/img51.png](assets/img51.png)
+
+![assets/img52.png](assets/img52.png)

@@ -43,7 +43,7 @@ Curso de introduccion a Selenium con Python realizado en Platzi
 
 [Clase 19 Ordenar tablas](#Clase-19-Ordenar-tablas)
 
-[]()
+[Clase 20 Data Driven Testing (DDT)](#Clase-20-Data-Driven-Testing-(DDT))
 
 []()
 
@@ -1383,6 +1383,85 @@ class Tables(unittest.TestCase):
 
 
         print(table_data)
+
+    def tearDown(self):
+        self.driver.close()
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity = 2)
+```
+
+## Clase 20 Data Driven Testing (DDT)
+
+Es una metodologia utilizada en el testing de software que se puede implementar en Selenium y esto ayuda a que las automatizaciones sean mucho mas robustas y versatiles, ademas, se debe tener en cuenta que esto es algo distinto al TDD(Test Driven Depelopment)
+
+![assets/img45.png](assets/img45.png)
+
+![assets/img46.png](assets/img46.png)
+
+Para esta clase lo primero que hay que hacer es abrir la terminal e instalar el modulo ddt mediante la siguiente instruccion, recordar que esta instruccion depende del sistema operativo, en este caso es linux mint o los basados en ubuntu o debian.:
+
+- pip3 install ddt
+
+Despues se importan los modulos csv para abrir la tabla de datos del curso llamada **testdata.csv**, de la cual se cargaran datos en la opcion de busqueda de la pagina que se ha venido trabajando a lo largo de todo el curso para realizar las respectivas validaciones y verificar que los datos esten correctos
+
+**search_ddt.py**
+
+```
+import csv, unittest
+from ddt import ddt, data, unpack
+from selenium import webdriver
+
+def get_data(file_name):
+    rows = []
+    data_file = open(file_name, 'r')
+    reader = csv.reader(data_file)
+    next(reader, None)
+
+    for row in reader:
+        rows.append(row)
+    return rows
+
+
+@ddt
+class SearchDDT(unittest.TestCase):
+
+    def setUp(self):
+        self.driver = webdriver.Chrome(executable_path = './chromedriver')
+        driver = self.driver
+        driver.implicitly_wait(30)
+        driver.maximize_window()
+        driver.get('http://demo-store.seleniumacademy.com/')
+
+    @data(*get_data('testdata.csv'))
+    @unpack
+    
+    def test_search_ddt(self, search_value, expected_count):
+        driver = self.driver
+
+        search_field = driver.find_element_by_name('q')
+        search_field.clear()
+        search_field.send_keys(search_value)
+        search_field.submit()
+
+        products = driver.find_elements_by_xpath('//h2[@class="product-name"]/a')
+        print(f'Found {len(products)} products')
+
+        expected_count = int(expected_count)
+
+        if expected_count > 0:
+            self.assertEqual(expected_count, len(products))
+        else:
+            message = driver.find_element_by_class_name('note-msg')
+            self.assertEqual('Your search returns no results.', message)
+
+        for product in products:
+            print(product.text)
+
+            self.assertEqual(expected_count, len(products))
+
+        print(f'Found {len(products)} products')
 
     def tearDown(self):
         self.driver.close()

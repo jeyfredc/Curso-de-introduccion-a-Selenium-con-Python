@@ -45,7 +45,7 @@ Curso de introduccion a Selenium con Python realizado en Platzi
 
 [Clase 20 Data Driven Testing (DDT)](#Clase-20-Data-Driven-Testing-(DDT))
 
-[]()
+[Clase 21 Page Object Model (POM)](#Clase-21-Page-Object-Model-(POM))
 
 []()
 
@@ -1465,6 +1465,98 @@ class SearchDDT(unittest.TestCase):
 
     def tearDown(self):
         self.driver.close()
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity = 2)
+```
+
+## Clase 21 Page Object Model (POM)
+
+POM es un patron de diseño utilizado en testing que brinda diversos beneficios para las automatizaciones
+
+![assets/img47.png](assets/img47.png)
+
+La manera en la que funciona es que en lugar de tener las pruebas en un solo archivo, se manejan archivos independientes los cuales se les llama pages, haciendo referencia al sitio donde se aplican
+
+![assets/img48.png](assets/img48.png)
+
+para este clase se crea una carpeta llamada **pom** donde se agregan 2 archivos, el primero llamado **google_page.py** y el segundo **test_google.py** en donde se ejecutara la prueba
+
+**google_page.py**
+
+```
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+
+class GooglePage(object):
+
+    def __init__(self, driver):
+        self._driver = driver
+        self._url = 'https://google.com'
+        self.search_locator = 'q'
+
+
+    @property
+    def is_loaded(self):
+        WebDriverWait(self._driver, 10).until(EC.presence_of_element_located((By.NAME, 'q')))
+        return True
+    
+    @property
+    def keyword(self):
+        input_field = self._driver.find_element_by_name('q')
+        return input_field.get_attribute('value')
+
+
+    def open(self):
+        self._driver.get(self._url)
+
+    
+    def type_search(self, keyword):
+        input_field = self._driver.find_element_by_name('q')
+        input_field.send_keys(keyword)
+
+    
+    def click_submit(self):
+        input_field = self._driver.find_element_by_name('q')
+        input_field.submit()
+
+
+    def search(self, keyword):
+        self.type_search(keyword)
+        self.click_submit
+
+
+```
+
+**test_google.py**
+
+```
+import unittest
+from selenium import webdriver
+from google_page import GooglePage
+
+class GoogleTest(unittest.TestCase):
+
+    @classmethod
+    def setUp(cls):
+        cls.driver = webdriver.Chrome(executable_path = '../chromedriver')
+
+    
+    def test_search(self):
+        google = GooglePage(self.driver)
+        google.open()
+        google.search('Platzi')
+
+        self.assertEqual('Platzi', google.keyword)
+
+
+    @classmethod
+    def tearDown(cls):
+        cls.driver.close()
 
 
 if __name__ == "__main__":
